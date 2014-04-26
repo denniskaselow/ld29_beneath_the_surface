@@ -31,12 +31,13 @@ class Transform extends Component implements Tweenable {
 }
 
 class Wall extends Component {}
-
+class Enemy extends Component {}
 class Trap extends Component {}
 class TrapTimer extends Component {
   double timeLeft = 0.0;
   TrapTimer({this.timeLeft: 1000.0});
 }
+class Mass extends Component {}
 
 class Spatial extends Component {
   String sprite;
@@ -69,3 +70,10 @@ class TrapMover extends Component {
   Vector2 currentMovement = new Vector2.zero();
   TrapMover(num x, num y) : maxMovement = new Vector2(x.toDouble(), y.toDouble());
 }
+
+class BodyRect extends Component {
+  Rectangle value;
+  BodyRect(this.value);
+}
+
+class InAir extends Component {}

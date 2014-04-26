@@ -54,6 +54,10 @@ class TrapRenderingSystem extends SpatialRenderingSystem {
   TrapRenderingSystem(CanvasRenderingContext2D ctx, SpriteSheet sheet) : super(ctx, sheet, [Trap]);
 }
 
+class EnemyRenderingSystem extends SpatialRenderingSystem {
+  EnemyRenderingSystem(CanvasRenderingContext2D ctx, SpriteSheet sheet) : super(ctx, sheet, [Enemy]);
+}
+
 class ControllerRenderingSystem extends SpatialRenderingSystem {
   ComponentMapper<Transform> tm;
   ComponentMapper<Controller> cm;

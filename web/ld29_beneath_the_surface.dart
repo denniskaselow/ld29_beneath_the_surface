@@ -5,7 +5,9 @@ import 'package:ld29_beneath_the_surface/client.dart';
                              PlayerRenderingSystem, PlayerAccelerationSystem,
                              PlayerInputHandlingSystem, AccelerationSystem,
                              MovementSystem, ControllerActivatioSystem,
-                             TrapMovementSystem, ControllerDelaySystm
+                             TrapMovementSystem, ControllerDelaySystm,
+                             EnemyRenderingSystem, EnemyAiSystem,
+                             GravitySysteme, AccelerationResettingSystem
                             ])
 import 'dart:mirrors';
 
@@ -15,15 +17,52 @@ void main() {
 
 class Game extends GameBase {
 
+  List<List<bool>> tileMap;
+
   Game() : super('ld29_beneath_the_surface', 'canvas', 1280, 720, bodyDefsName: null);
 
   @override
   void createEntities() {
+    addEntity([new PlayerInput(), new Transform(1200, 575), new Spatial('player'), new Acceleration(), new Velocity(), new BodyRect(spriteSheet.sprites['player'].dst)]);
+    addEntity([new Enemy(), new Transform(0, 275), new Spatial('stickman'), new Acceleration(), new Velocity(), new Mass(), new BodyRect(spriteSheet.sprites['stickman'].dst)]);
+  }
+
+  @override
+  List<EntitySystem> getSystems() {
+    return [
+            new AccelerationResettingSystem(),
+            new TweeningSystem(),
+            new GravitySysteme(),
+            new EnemyAiSystem(tileMap),
+            new PlayerInputHandlingSystem(),
+            new PlayerAccelerationSystem(),
+            new AccelerationSystem(),
+            new MovementSystem(tileMap),
+            new ControllerDelaySystm(),
+            new ControllerActivatioSystem(),
+            new TrapMovementSystem(),
+            new CanvasCleaningSystem(canvas),
+            new TrapRenderingSystem(ctx, spriteSheet),
+            new WallRenderingSystem(canvas, spriteSheet),
+            new ControllerRenderingSystem(ctx, spriteSheet),
+            new EnemyRenderingSystem(ctx, spriteSheet),
+            new PlayerRenderingSystem(ctx, spriteSheet),
+            new FpsRenderingSystem(ctx),
+            new AnalyticsSystem(AnalyticsSystem.GITHUB, 'ld29_beneath_the_surface')
+    ];
+  }
+
+  @override
+  Future onInit() {
+    world.addManager(new GroupManager());
+
     var gm = world.getManager(GroupManager);
-    HttpRequest.getString('packages/ld29_beneath_the_surface/assets/levels/level0.txt').then((content) {
+    return HttpRequest.getString('packages/ld29_beneath_the_surface/assets/levels/level0.txt').then((content) {
       var rows = content.split(new RegExp('\r\n'));
+      tileMap = new List(rows.length);
       for (int y = rows.length - 1; y >= 0; y--) {
         var tiles = rows[y].split('');
+        tileMap[y] = new List<bool>.filled(tiles.length, true);
         for (int x = 0; x < tiles.length; x++) {
           switch (tiles[x]) {
             case 'B':
@@ -39,38 +78,12 @@ class Game extends GameBase {
               var e = addEntity([new Transform(x * 50, y * 50), new Trap(), new Spatial('spikes'), new Controller(), new TrapMover(0.0, -25.0)]);
               gm.add(e, GROUP_CONTROLLER);
               break;
-
+            default:
+              tileMap[y][x] = false;
           }
         }
       }
     });
-    addEntity([new PlayerInput(), new Transform(1200, 575), new Spatial('player'), new Acceleration(), new Velocity()]);
-  }
-
-  @override
-  List<EntitySystem> getSystems() {
-    return [
-            new TweeningSystem(),
-            new PlayerInputHandlingSystem(),
-            new PlayerAccelerationSystem(),
-            new AccelerationSystem(),
-            new MovementSystem(),
-            new ControllerDelaySystm(),
-            new ControllerActivatioSystem(),
-            new TrapMovementSystem(),
-            new CanvasCleaningSystem(canvas),
-            new TrapRenderingSystem(ctx, spriteSheet),
-            new WallRenderingSystem(canvas, spriteSheet),
-            new ControllerRenderingSystem(ctx, spriteSheet),
-            new PlayerRenderingSystem(ctx, spriteSheet),
-            new FpsRenderingSystem(ctx),
-            new AnalyticsSystem(AnalyticsSystem.GITHUB, 'ld29_beneath_the_surface')
-    ];
-  }
-
-  @override
-  onInit() {
-    world.addManager(new GroupManager());
   }
 
 }

@@ -5,7 +5,7 @@ import 'package:tweenengine/tweenengine.dart';
 
 part 'src/shared/components.dart';
 
-//part 'src/shared/systems/name.dart';
+part 'src/shared/systems/enemy.dart';
 part 'src/shared/systems/logic.dart';
 
 const GROUP_CONTROLLER = 'controller';

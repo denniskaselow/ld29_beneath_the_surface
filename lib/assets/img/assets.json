@@ -26,11 +26,19 @@
 },
 "spikes":
 {
-	"frame": {"x":42,"y":54,"w":50,"h":30},
+	"frame": {"x":62,"y":54,"w":50,"h":30},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":10,"w":50,"h":30},
 	"sourceSize": {"w":50,"h":50}
+},
+"stickman":
+{
+	"frame": {"x":42,"y":54,"w":18,"h":72},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":28,"w":18,"h":72},
+	"sourceSize": {"w":50,"h":100}
 },
 "wall":
 {
@@ -47,6 +55,6 @@
 	"format": "RGBA8888",
 	"size": {"w":128,"h":128},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:f9311ec39b906b1d96a9d3816a1bcdbb:95684154180d047f7ab6f38d51fada99:a759b6bbc8381ac9c472b28f589ad0d6$"
+	"smartupdate": "$TexturePacker:SmartUpdate:9cb7864efb4d1578e3ce6c749a991e82:6dff1044c3081ca774326e4783d3b5bf:a759b6bbc8381ac9c472b28f589ad0d6$"
 }
 }

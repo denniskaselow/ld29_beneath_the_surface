@@ -46,14 +46,31 @@ class AccelerationSystem extends EntityProcessingSystem {
 class MovementSystem extends EntityProcessingSystem {
   ComponentMapper<Transform> tm;
   ComponentMapper<Velocity> vm;
-  MovementSystem() : super(Aspect.getAspectForAllOf([Transform, Velocity]));
+  ComponentMapper<BodyRect> brm;
+  List<List<bool>> tileMap;
+  MovementSystem(this.tileMap) : super(Aspect.getAspectForAllOf([Transform, Velocity, BodyRect]));
 
   @override
   void processEntity(Entity entity) {
     var v = vm.get(entity);
     var t = tm.get(entity);
+    var rect = brm.get(entity).value;
 
     t.pos = t.pos + v.value / world.delta;
+    // tile below
+    if (tileMap[2 + (t.pos.y - 25) ~/ 50][(t.pos.x + 25) ~/ 50] == true) {
+      t.pos.y = (t.pos.y ~/ 50) * 50.0 + 25.0;
+      v.value.y = 0.0;
+      entity.removeComponent(InAir);
+    } else {
+      entity.addComponent(new InAir());
+    }
+    // tile to the right
+    if (tileMap[1 + t.pos.y ~/ 50][(t.pos.x + 25.0 + rect.width / 2) ~/ 50] == true) {
+      t.pos.x = (t.pos.x ~/ 50) * 50.0 + rect.width;
+      v.value.x = 0.0;
+    }
+    entity.changedInWorld();
   }
 }
 
@@ -133,5 +150,27 @@ class TweeningSystem extends VoidEntitySystem {
   @override
   void processSystem() {
     tweenManager.update(world.delta);
+  }
+}
+
+class GravitySysteme extends EntityProcessingSystem {
+  ComponentMapper<Acceleration> am;
+  GravitySysteme() : super(Aspect.getAspectForAllOf([Mass, Acceleration]));
+
+  @override
+  void processEntity(Entity entity) {
+    var a = am.get(entity);
+
+    a.value.y = 10.0;
+  }
+}
+
+class AccelerationResettingSystem extends EntityProcessingSystem {
+  ComponentMapper<Acceleration> am;
+  AccelerationResettingSystem() : super(Aspect.getAspectForAllOf([Acceleration]));
+
+  @override
+  void processEntity(Entity entity) {
+    am.get(entity).value.setZero();
   }
 }

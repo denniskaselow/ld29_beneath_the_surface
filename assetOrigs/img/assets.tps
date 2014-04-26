@@ -177,6 +177,7 @@
             <filename>controller_off.png</filename>
             <filename>controller_on.png</filename>
             <filename>player.png</filename>
+            <filename>stickman.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
