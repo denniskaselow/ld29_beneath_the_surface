@@ -32,14 +32,12 @@ class WallRenderingSystem extends EntitySystem {
   bool checkProcessing() => true;
 }
 
-class ObstacleRenderingSystem extends EntityProcessingSystem {
+abstract class SpatialRenderingSystem extends EntityProcessingSystem {
   ComponentMapper<Transform> tm;
   ComponentMapper<Spatial> sm;
   CanvasRenderingContext2D ctx;
   SpriteSheet sheet;
-  ObstacleRenderingSystem(this.ctx, this.sheet) : super(
-      Aspect.getAspectForAllOf([Transform, Spatial, Obstacle]));
-
+  SpatialRenderingSystem(this.ctx, this.sheet, List<Type> types) : super(Aspect.getAspectForAllOf([Spatial, Transform]).allOf(types));
 
   @override
   void processEntity(Entity entity) {
@@ -50,4 +48,29 @@ class ObstacleRenderingSystem extends EntityProcessingSystem {
     ctx.drawImageScaledFromSource(sheet.image, src.left, src.top, src.width,
         src.height, dst.left + pos.x, dst.top + pos.y, dst.width, dst.height);
   }
+}
+
+class TrapRenderingSystem extends SpatialRenderingSystem {
+  TrapRenderingSystem(CanvasRenderingContext2D ctx, SpriteSheet sheet) : super(ctx, sheet, [Trap]);
+}
+
+class ControllerRenderingSystem extends SpatialRenderingSystem {
+  ComponentMapper<Transform> tm;
+  ComponentMapper<Controller> cm;
+  ControllerRenderingSystem(CanvasRenderingContext2D ctx, SpriteSheet sheet) : super(ctx, sheet, [Controller]);
+
+  @override
+  void processEntity(Entity entity) {
+    var x = tm.get(entity).pos.x;
+    var state = cm.get(entity).active ? 'on' : 'off';
+    var sprite = sheet.sprites['controller_$state'];
+    var dst = sprite.dst;
+    var src = sprite.src;
+    ctx.drawImageScaledFromSource(sheet.image, src.left, src.top, src.width,
+        src.height, dst.left + x, dst.top + 575, dst.width, dst.height);
+  }
+}
+
+class PlayerRenderingSystem extends SpatialRenderingSystem {
+  PlayerRenderingSystem(CanvasRenderingContext2D ctx, SpriteSheet sheet) : super(ctx, sheet, [PlayerInput]);
 }

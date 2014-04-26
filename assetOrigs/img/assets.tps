@@ -172,8 +172,11 @@
         </struct>
         <key>fileList</key>
         <array>
-            <filename>block.png</filename>
             <filename>spikes.png</filename>
+            <filename>wall.png</filename>
+            <filename>controller_off.png</filename>
+            <filename>controller_on.png</filename>
+            <filename>player.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
