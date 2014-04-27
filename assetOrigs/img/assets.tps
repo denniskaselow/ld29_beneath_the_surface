@@ -186,6 +186,8 @@
             <filename>lava.png</filename>
             <filename>lava_top.png</filename>
             <filename>fire_bottom.png</filename>
+            <filename>shooter_left.png</filename>
+            <filename>arrow_from_left.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

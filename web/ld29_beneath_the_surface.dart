@@ -99,6 +99,18 @@ class Game extends GameBase {
                                  new TrapMover([new Vector2(0.0, -25.0), new Vector2(0.0, 25.0)], [Quint.OUT, Quint.IN], [0.1, 0.9], 1000.0)]);
               gm.add(e, GROUP_TRAPS);
               break;
+            case '>':
+              addEntity([new Transform(x * 50, y * 50), new Background(), new Spatial('background')]);
+              addEntity([new Transform(x * 50, y * 50), new Wall(), new Spatial('shooter_left')]);
+              var e = addEntity([new Transform(x * 50, y * 50),
+                                 new Trap(),
+                                 new Spatial('arrow_from_left'),
+                                 new BodyRect(spriteSheet.sprites['arrow_from_left'].dst),
+                                 new Controller(),
+                                 new TrapMover([new Vector2(450.0, 0.0), new Vector2(-450.0, 0.0)], [Linear.INOUT, Linear.INOUT], [1.0, 0.0], 0.0)]);
+              gm.add(e, GROUP_TRAPS);
+              tileMap[y][x] = false;
+              break;
             case 'l':
               addEntity([new Transform(x * 50, y * 50), new Background(), new Spatial('background')]);
               addEntity([new Transform(x * 50, y * 50), new Wall(), new Spatial('lava')]);
