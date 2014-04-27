@@ -86,7 +86,7 @@ class ControllerActivatioSystem extends EntityProcessingSystem {
   void processEntity(Entity entity) {
     if (pim.get(entity).action) {
       var playerX = tm.get(entity).pos.x;
-      gm.getEntities(GROUP_CONTROLLER).forEach((controllerEntity) {
+      gm.getEntities(GROUP_TRAPS).forEach((controllerEntity) {
         var controller = cm.get(controllerEntity);
         var controllerX = tm.get(controllerEntity).pos.x;
         if (controllerX > playerX - 25.0 && controllerX < playerX + 25.0 && !controller.active) {
@@ -173,5 +173,59 @@ class AccelerationResettingSystem extends EntityProcessingSystem {
   @override
   void processEntity(Entity entity) {
     am.get(entity).value.setZero();
+  }
+}
+
+class EnemyWithTrapCollisionSystem extends EntityProcessingSystem {
+  ComponentMapper<Enemy> em;
+  ComponentMapper<BodyRect> brm;
+  ComponentMapper<Transform> tm;
+  ComponentMapper<Controller> cm;
+  GroupManager gm;
+  EnemyWithTrapCollisionSystem() : super(Aspect.getAspectForAllOf([Enemy, BodyRect, Transform]).exclude([Invulnerability]));
+
+
+  @override
+  void processEntity(Entity entity) {
+    var pos = tm.get(entity).pos;
+    var enemyRect = brm.get(entity).value;
+    var enemyRectAtPos = getRectAtPos(enemyRect, pos);
+    gm.getEntities(GROUP_TRAPS).where((trap) => cm.get(trap).active).forEach((trap) {
+      var trapPos = tm.get(trap).pos;
+      var trapRect = brm.get(trap).value;
+      Rectangle trapRectAtPos = getRectAtPos(trapRect, trapPos);
+      if (trapRectAtPos.intersects(enemyRectAtPos)) {
+        print(trapRectAtPos);
+        print(enemyRectAtPos);
+        var e = em.get(entity);
+        e.health -= 1;
+        if (e.health == 0) {
+          entity.deleteFromWorld();
+        } else {
+          entity.addComponent(new Invulnerability());
+          entity.changedInWorld();
+        }
+        return;
+      }
+    });
+  }
+
+  Rectangle getRectAtPos(Rectangle rect, Vector2 pos) {
+    return new Rectangle(rect.left + pos.x, rect.top + pos.y, rect.width, rect.height);
+  }
+}
+
+class InvulnerabilityDecayingSystem extends EntityProcessingSystem {
+  ComponentMapper<Invulnerability> im;
+  InvulnerabilityDecayingSystem() : super(Aspect.getAspectForAllOf([Invulnerability]));
+
+  @override
+  void processEntity(Entity entity) {
+    var i = im.get(entity);
+    i.delay -= world.delta;
+    if (i.delay < 0.0) {
+      entity.removeComponent(Invulnerability);
+      entity.changedInWorld();
+    }
   }
 }

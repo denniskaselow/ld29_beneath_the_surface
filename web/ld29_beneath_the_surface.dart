@@ -8,7 +8,8 @@ import 'package:ld29_beneath_the_surface/client.dart';
                              TrapMovementSystem, ControllerDelaySystm,
                              EnemyRenderingSystem, EnemyAiSystem,
                              GravitySysteme, AccelerationResettingSystem,
-                             BackgroundRenderingSystem
+                             BackgroundRenderingSystem, EnemyWithTrapCollisionSystem,
+                             DebugRenderingSystem, InvulnerabilityDecayingSystem
                             ])
 import 'dart:mirrors';
 
@@ -24,8 +25,8 @@ class Game extends GameBase {
 
   @override
   void createEntities() {
-    addEntity([new PlayerInput(), new Transform(1200, 575), new Spatial('player'), new Acceleration(), new Velocity(), new BodyRect(spriteSheet.sprites['player'].dst)]);
-    addEntity([new Enemy(), new Transform(0, 270), new Spatial('stickman'), new Acceleration(), new Velocity(), new Mass(), new BodyRect(spriteSheet.sprites['stickman'].dst)]);
+    addEntity([new PlayerInput(), new Transform(100, 575), new Spatial('player'), new Acceleration(), new Velocity(), new BodyRect(spriteSheet.sprites['player'].dst)]);
+    addEntity([new Enemy(health: 2), new Transform(0, 275), new Spatial('stickman'), new Acceleration(), new Velocity(), new Mass(), new BodyRect(spriteSheet.sprites['stickman'].dst)]);
   }
 
   @override
@@ -42,6 +43,7 @@ class Game extends GameBase {
             new ControllerDelaySystm(),
             new ControllerActivatioSystem(),
             new TrapMovementSystem(),
+            new EnemyWithTrapCollisionSystem(),
             new CanvasCleaningSystem(canvas),
             new BackgroundRenderingSystem(canvas, spriteSheet),
             new TrapRenderingSystem(ctx, spriteSheet),
@@ -49,7 +51,9 @@ class Game extends GameBase {
             new ControllerRenderingSystem(ctx, spriteSheet),
             new EnemyRenderingSystem(ctx, spriteSheet),
             new PlayerRenderingSystem(ctx, spriteSheet),
+//            new DebugRenderingSystem(ctx),
             new FpsRenderingSystem(ctx),
+            new InvulnerabilityDecayingSystem(),
             new AnalyticsSystem(AnalyticsSystem.GITHUB, 'ld29_beneath_the_surface')
     ];
   }
@@ -72,13 +76,23 @@ class Game extends GameBase {
               break;
             case 'v':
               addEntity([new Transform(x * 50, y * 50), new Wall(), new Spatial('wall')]);
-              var e = addEntity([new Transform(x * 50, y * 50), new Trap(), new Spatial('spikes'), new Controller(), new TrapMover(0.0, 25.0)]);
-              gm.add(e, GROUP_CONTROLLER);
+              var e = addEntity([new Transform(x * 50, y * 50),
+                                 new Trap(),
+                                 new Spatial('spikes'),
+                                 new BodyRect(spriteSheet.sprites['spikes'].dst),
+                                 new Controller(),
+                                 new TrapMover(0.0, 25.0)]);
+              gm.add(e, GROUP_TRAPS);
               break;
             case '^':
               addEntity([new Transform(x * 50, y * 50), new Wall(), new Spatial('wall')]);
-              var e = addEntity([new Transform(x * 50, y * 50), new Trap(), new Spatial('spikes'), new Controller(), new TrapMover(0.0, -25.0)]);
-              gm.add(e, GROUP_CONTROLLER);
+              var e = addEntity([new Transform(x * 50, y * 50),
+                                 new Trap(),
+                                 new Spatial('spikes'),
+                                 new BodyRect(spriteSheet.sprites['spikes'].dst),
+                                 new Controller(),
+                                 new TrapMover(0.0, -25.0)]);
+              gm.add(e, GROUP_TRAPS);
               break;
             default:
               addEntity([new Transform(x * 50, y * 50), new Background(), new Spatial('background')]);

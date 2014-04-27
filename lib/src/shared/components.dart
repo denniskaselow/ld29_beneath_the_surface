@@ -32,7 +32,10 @@ class Transform extends Component implements Tweenable {
 
 class Background extends Component {}
 class Wall extends Component {}
-class Enemy extends Component {}
+class Enemy extends Component {
+  int health;
+  Enemy({this.health: 1});
+}
 class Trap extends Component {}
 class TrapTimer extends Component {
   double timeLeft = 0.0;
@@ -78,3 +81,7 @@ class BodyRect extends Component {
 }
 
 class InAir extends Component {}
+class Invulnerability extends Component {
+  double delay;
+  Invulnerability({this.delay: 1000.0});
+}

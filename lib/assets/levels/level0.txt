@@ -2,7 +2,7 @@ BBBBBBBBBBBBBBBBBBBvBBBBBBBBB
 B________________________BBBB
 B________________________BBBB
 B________________________BBBB
-B_________BBBBB__________BBBB
+B_________BB^BB__________BBBB
 _______BBBBBBBB____________BB
 _______BBBBBBBB____________BB
 BB__B^BBBBBBBBB^B__BB___BBBBB

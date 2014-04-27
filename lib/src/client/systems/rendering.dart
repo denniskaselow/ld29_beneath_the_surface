@@ -110,3 +110,25 @@ class ControllerRenderingSystem extends SpatialRenderingSystem {
 class PlayerRenderingSystem extends SpatialRenderingSystem {
   PlayerRenderingSystem(CanvasRenderingContext2D ctx, SpriteSheet sheet) : super(ctx, sheet, [PlayerInput]);
 }
+
+class DebugRenderingSystem extends EntityProcessingSystem {
+  ComponentMapper<Transform> tm;
+  ComponentMapper<BodyRect> brm;
+  CanvasRenderingContext2D ctx;
+  DebugRenderingSystem(this.ctx) : super(Aspect.getAspectForAllOf([Transform, BodyRect]));
+
+  @override
+  void processEntity(Entity entity) {
+    var pos = tm.get(entity).pos;
+    var rect = brm.get(entity).value;
+    var dst = getRectAtPos(rect, pos);
+    ctx..save()
+       ..strokeStyle = 'white'
+       ..strokeRect(dst.left, dst.top, dst.width, dst.height)
+       ..restore();
+  }
+
+  Rectangle getRectAtPos(Rectangle rect, Vector2 pos) {
+    return new Rectangle(rect.left + pos.x, rect.top + pos.y, rect.width, rect.height);
+  }
+}
