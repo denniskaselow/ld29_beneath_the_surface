@@ -31,6 +31,9 @@ class PlayerInputHandlingSystem extends EntityProcessingSystem {
       pi.action = true;
     }
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
 
 class EnemySpawningSystem extends VoidEntitySystem {
@@ -82,5 +85,5 @@ class EnemySpawningSystem extends VoidEntitySystem {
   }
 
   @override
-  bool checkProcessing() => world.frame % mod == spawnOnFrame;
+  bool checkProcessing() => gameState.gameRunning && world.frame % mod == spawnOnFrame;
 }

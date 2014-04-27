@@ -18,6 +18,9 @@ class PlayerAccelerationSystem extends EntityProcessingSystem {
       a.value.setZero();
     }
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
 
 class AccelerationSystem extends EntityProcessingSystem {
@@ -41,6 +44,9 @@ class AccelerationSystem extends EntityProcessingSystem {
       v.value.x = v.value.x.sign * min(v.value.x.abs(), 100.0);
     }
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
 
 class EffectMovementSystem extends EntityProcessingSystem {
@@ -55,6 +61,9 @@ class EffectMovementSystem extends EntityProcessingSystem {
 
     t.pos = t.pos + v.value / world.delta;
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
 
 class MovementSystem extends EntityProcessingSystem {
@@ -92,6 +101,9 @@ class MovementSystem extends EntityProcessingSystem {
     }
     entity.changedInWorld();
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
 
 class ControllerActivatioSystem extends EntityProcessingSystem {
@@ -120,6 +132,9 @@ class ControllerActivatioSystem extends EntityProcessingSystem {
       });
     }
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
 
 class ControllerDelaySystm extends EntityProcessingSystem {
@@ -136,6 +151,9 @@ class ControllerDelaySystm extends EntityProcessingSystem {
       }
     }
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
 
 class TrapMovementSystem extends EntityProcessingSystem {
@@ -162,6 +180,9 @@ class TrapMovementSystem extends EntityProcessingSystem {
     entity.removeComponent(TrapTimer);
     entity.changedInWorld();
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
 
 class TweeningSystem extends VoidEntitySystem {
@@ -170,6 +191,9 @@ class TweeningSystem extends VoidEntitySystem {
   void processSystem() {
     tweenManager.update(world.delta);
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
 
 class GravitySysteme extends EntityProcessingSystem {
@@ -183,6 +207,9 @@ class GravitySysteme extends EntityProcessingSystem {
     // 50px == 1m
     a.value.y = 500.0 / world.delta;
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
 
 class AccelerationResettingSystem extends EntityProcessingSystem {
@@ -193,6 +220,9 @@ class AccelerationResettingSystem extends EntityProcessingSystem {
   void processEntity(Entity entity) {
     am.get(entity).value.setZero();
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
 
 class EnemyWithTrapCollisionSystem extends EntityProcessingSystem {
@@ -203,7 +233,6 @@ class EnemyWithTrapCollisionSystem extends EntityProcessingSystem {
   ComponentMapper<Spatial> sm;
   GroupManager gm;
   EnemyWithTrapCollisionSystem() : super(Aspect.getAspectForAllOf([Enemy, BodyRect, Transform, Spatial]).exclude([Invulnerability]));
-
 
   @override
   void processEntity(Entity entity) {
@@ -225,6 +254,9 @@ class EnemyWithTrapCollisionSystem extends EntityProcessingSystem {
           entity.deleteFromWorld();
 
           gameState.kills++;
+          if (gameState.kills % 10 == 0) {
+            gameState.chests++;
+          }
           bloodRect = enemyRectAtPos;
         } else {
           entity.addComponent(new Invulnerability());
@@ -253,6 +285,9 @@ class EnemyWithTrapCollisionSystem extends EntityProcessingSystem {
   Rectangle getRectAtPos(Rectangle rect, Vector2 pos) {
     return new Rectangle(rect.left + pos.x, rect.top + pos.y, rect.width, rect.height);
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
 
 class InvulnerabilityDecayingSystem extends EntityProcessingSystem {
@@ -268,6 +303,9 @@ class InvulnerabilityDecayingSystem extends EntityProcessingSystem {
       entity.changedInWorld();
     }
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
 
 class EffectDecayingSystem extends EntityProcessingSystem {
@@ -281,6 +319,9 @@ class EffectDecayingSystem extends EntityProcessingSystem {
       entity.deleteFromWorld();
     }
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
 
 class TreasureChamberSystem extends EntityProcessingSystem {
@@ -296,4 +337,7 @@ class TreasureChamberSystem extends EntityProcessingSystem {
       entity.deleteFromWorld();
     }
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }

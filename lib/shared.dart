@@ -22,6 +22,7 @@ class GameState {
   int kills = 0;
 
   bool get lost => chests == 0;
+  bool get gameRunning => !lost;
 
   void reset() {
     chests = 5;

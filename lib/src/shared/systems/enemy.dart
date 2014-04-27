@@ -49,4 +49,7 @@ class EnemyAiSystem extends EntityProcessingSystem {
       }
     }
   }
+
+  @override
+  bool checkProcessing() => gameState.gameRunning;
 }
