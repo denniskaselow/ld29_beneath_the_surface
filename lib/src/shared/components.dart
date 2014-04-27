@@ -67,6 +67,8 @@ class Acceleration extends Component {
 
 class Velocity extends Component {
   Vector2 value = new Vector2.zero();
+  Velocity();
+  Velocity.from(num x, num y) : value = new Vector2(x.toDouble(), y.toDouble());
 }
 
 class TrapMover extends Component {
@@ -84,4 +86,32 @@ class InAir extends Component {}
 class Invulnerability extends Component {
   double delay;
   Invulnerability({this.delay: 1000.0});
+}
+
+class Effect extends Component implements Tweenable {
+  static const TWEEN_ALPHA = 0;
+  double alpha;
+  Effect({this.alpha: 1.0});
+
+  @override
+  int getTweenableValues(int tweenType, List<num> returnValues) {
+    switch (tweenType) {
+      case TWEEN_ALPHA:
+        returnValues[0] = alpha;
+        return 1;
+      default:
+        return 0;
+    }
+  }
+
+  @override
+  void setTweenableValues(int tweenType, List<num> newValues) {
+    switch (tweenType) {
+      case TWEEN_ALPHA:
+        alpha = newValues[0];
+        break;
+      default:
+        break;
+    }
+  }
 }

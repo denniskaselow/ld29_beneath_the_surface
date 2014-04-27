@@ -43,6 +43,20 @@ class AccelerationSystem extends EntityProcessingSystem {
   }
 }
 
+class EffectMovementSystem extends EntityProcessingSystem {
+  ComponentMapper<Transform> tm;
+  ComponentMapper<Velocity> vm;
+  EffectMovementSystem() : super(Aspect.getAspectForAllOf([Transform, Velocity, Effect]));
+
+  @override
+  void processEntity(Entity entity) {
+    var v = vm.get(entity);
+    var t = tm.get(entity);
+
+    t.pos = t.pos + v.value / world.delta;
+  }
+}
+
 class MovementSystem extends EntityProcessingSystem {
   ComponentMapper<Transform> tm;
   ComponentMapper<Velocity> vm;
@@ -204,13 +218,31 @@ class EnemyWithTrapCollisionSystem extends EntityProcessingSystem {
       if (trapRectAtPos.intersects(enemyRectAtPos)) {
         var e = em.get(entity);
         e.health -= 1;
+        Rectangle bloodRect;
         if (e.health == 0) {
           var label = sm.get(entity).sprite;
           eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Killed Enemy', label));
           entity.deleteFromWorld();
+
+          bloodRect = enemyRectAtPos;
         } else {
           entity.addComponent(new Invulnerability());
           entity.changedInWorld();
+
+          bloodRect = trapRectAtPos.intersection(enemyRectAtPos);
+        }
+        for (int i = 0; i < 5 + sqrt(bloodRect.width * bloodRect.height).toInt(); i++) {
+          var effect = new Effect();
+          Tween.to(effect, Effect.TWEEN_ALPHA, 2000.0)
+                ..targetValues = [0.0]
+                ..easing = Quint.IN
+                ..start(tweenManager);
+          world.createAndAddEntity([new Spatial('blood_${random.nextInt(3)}'),
+                                    new Transform(bloodRect.left + random.nextDouble() * bloodRect.width,
+                                        bloodRect.top + random.nextDouble() * bloodRect.height),
+                                        new Velocity.from(-50 + random.nextDouble() * 100, random.nextDouble() * -50),
+                                        new Acceleration(),
+                                        new Mass(), effect]);
         }
         return;
       }
@@ -233,6 +265,19 @@ class InvulnerabilityDecayingSystem extends EntityProcessingSystem {
     if (i.delay < 0.0) {
       entity.removeComponent(Invulnerability);
       entity.changedInWorld();
+    }
+  }
+}
+
+class EffectDecayingSystem  extends EntityProcessingSystem {
+  ComponentMapper<Effect> em;
+  EffectDecayingSystem() : super(Aspect.getAspectForAllOf([Effect]));
+
+  @override
+  void processEntity(Entity entity) {
+    var e = em.get(entity);
+    if (e.alpha == 0.0) {
+      entity.deleteFromWorld();
     }
   }
 }

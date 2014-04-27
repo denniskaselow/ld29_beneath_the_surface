@@ -179,7 +179,10 @@
             <filename>player.png</filename>
             <filename>stickman.png</filename>
             <filename>background.png</filename>
-            <filename>background_door.png</filename>
+            <filename>blood_0.png</filename>
+            <filename>blood_1.png</filename>
+            <filename>blood_2.png</filename>
+            <filename>blood_3.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

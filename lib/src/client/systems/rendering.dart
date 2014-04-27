@@ -90,6 +90,27 @@ class EnemyRenderingSystem extends SpatialRenderingSystem {
   EnemyRenderingSystem(CanvasRenderingContext2D ctx, SpriteSheet sheet) : super(ctx, sheet, [Enemy]);
 }
 
+class EffectRenderingSystem extends SpatialRenderingSystem {
+  ComponentMapper<Effect> em;
+  EffectRenderingSystem(CanvasRenderingContext2D ctx, SpriteSheet sheet) : super(ctx, sheet, [Effect]);
+
+  @override
+  void begin() {
+    ctx.save();
+  }
+
+  @override
+  void processEntity(Entity entity) {
+    ctx.globalAlpha = em.get(entity).alpha;
+    super.processEntity(entity);
+  }
+
+  @override
+  void end() {
+    ctx.restore();
+  }
+}
+
 class ControllerRenderingSystem extends SpatialRenderingSystem {
   ComponentMapper<Transform> tm;
   ComponentMapper<Controller> cm;
