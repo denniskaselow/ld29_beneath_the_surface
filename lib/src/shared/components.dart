@@ -34,7 +34,8 @@ class Background extends Component {}
 class Wall extends Component {}
 class Enemy extends Component {
   int health;
-  Enemy({this.health: 1});
+  String item;
+  Enemy(this.item, {this.health: 1});
 }
 class Trap extends Component {}
 class TrapTimer extends Component {

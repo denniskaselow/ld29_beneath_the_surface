@@ -237,7 +237,7 @@ class EnemyWithTrapCollisionSystem extends EntityProcessingSystem {
                 ..targetValues = [0.0]
                 ..easing = Quint.IN
                 ..start(tweenManager);
-          world.createAndAddEntity([new Spatial('blood_${random.nextInt(3)}'),
+          world.createAndAddEntity([new Spatial('${e.item}_${random.nextInt(3)}'),
                                     new Transform(bloodRect.left + random.nextDouble() * bloodRect.width,
                                         bloodRect.top + random.nextDouble() * bloodRect.height),
                                         new Velocity.from(-50 + random.nextDouble() * 100, random.nextDouble() * -50),

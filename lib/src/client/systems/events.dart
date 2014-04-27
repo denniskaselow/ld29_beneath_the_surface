@@ -49,13 +49,27 @@ class EnemySpawningSystem extends VoidEntitySystem {
 
   @override
   void processSystem() {
-    world.createAndAddEntity([new Enemy(health: 2),
-                              new Transform(0, 275),
-                              new Spatial('stickman'),
-                              new Acceleration(),
-                              new Velocity(),
-                              new Mass(),
-                              new BodyRect(sheet.sprites['stickman'].dst)]);
+    var enemyType = random.nextInt(2);
+    switch(enemyType) {
+      case 0:
+        world.createAndAddEntity([new Enemy('stick', health: 1 + random.nextInt(2)),
+                                  new Transform(0, 275),
+                                  new Spatial('stickman'),
+                                  new Acceleration(),
+                                  new Velocity(),
+                                  new Mass(),
+                                  new BodyRect(sheet.sprites['stickman'].dst)]);
+        break;
+      case 1:
+        world.createAndAddEntity([new Enemy('ring', health: 2 + random.nextInt(2)),
+                                  new Transform(0, 275),
+                                  new Spatial('green_hedgehog'),
+                                  new Acceleration(),
+                                  new Velocity(),
+                                  new Mass(),
+                                  new BodyRect(sheet.sprites['green_hedgehog'].dst)]);
+        break;
+    }
   }
 
   @override
