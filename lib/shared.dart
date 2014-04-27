@@ -12,3 +12,6 @@ part 'src/shared/systems/logic.dart';
 const GROUP_TRAPS = 'traps';
 
 final tweenManager = new TweenManager();
+final enemyDiedEvent = new EventType<EnemyDiedEvent>();
+
+class EnemyDiedEvent {}

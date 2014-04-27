@@ -28,7 +28,6 @@ class Game extends GameBase {
   @override
   void createEntities() {
     addEntity([new PlayerInput(), new Transform(100, 575), new Spatial('player'), new Acceleration(), new Velocity(), new BodyRect(spriteSheet.sprites['player'].dst)]);
-    addEntity([new Enemy(health: 2), new Transform(0, 275), new Spatial('stickman'), new Acceleration(), new Velocity(), new Mass(), new BodyRect(spriteSheet.sprites['stickman'].dst)]);
   }
 
   @override
@@ -59,6 +58,7 @@ class Game extends GameBase {
 //            new FpsRenderingSystem(ctx),
             new InvulnerabilityDecayingSystem(),
             new EffectDecayingSystem(),
+            new EnemySpawningSystem(spriteSheet),
             new AnalyticsSystem(AnalyticsSystem.GITHUB, 'ld29_beneath_the_surface')
     ];
   }

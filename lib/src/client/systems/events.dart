@@ -32,3 +32,32 @@ class PlayerInputHandlingSystem extends EntityProcessingSystem {
     }
   }
 }
+
+class EnemySpawningSystem extends VoidEntitySystem {
+  SpriteSheet sheet;
+  int spawnOnFrame = 1;
+  int mod = 1000;
+  EnemySpawningSystem(this.sheet);
+
+  @override
+  void initialize() {
+    eventBus.on(enemyDiedEvent).listen((_) {
+      mod = max(120, (mod * 0.95).toInt());
+      spawnOnFrame = (world.frame + 100) % mod;
+    });
+  }
+
+  @override
+  void processSystem() {
+    world.createAndAddEntity([new Enemy(health: 2),
+                              new Transform(0, 275),
+                              new Spatial('stickman'),
+                              new Acceleration(),
+                              new Velocity(),
+                              new Mass(),
+                              new BodyRect(sheet.sprites['stickman'].dst)]);
+  }
+
+  @override
+  bool checkProcessing() => world.frame % mod == spawnOnFrame;
+}

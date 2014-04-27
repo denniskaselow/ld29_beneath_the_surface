@@ -221,6 +221,7 @@ class EnemyWithTrapCollisionSystem extends EntityProcessingSystem {
         if (e.health == 0) {
           var label = sm.get(entity).sprite;
           eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Killed Enemy', label));
+          eventBus.fire(enemyDiedEvent, new EnemyDiedEvent());
           entity.deleteFromWorld();
 
           bloodRect = enemyRectAtPos;
@@ -268,7 +269,7 @@ class InvulnerabilityDecayingSystem extends EntityProcessingSystem {
   }
 }
 
-class EffectDecayingSystem  extends EntityProcessingSystem {
+class EffectDecayingSystem extends EntityProcessingSystem {
   ComponentMapper<Effect> em;
   EffectDecayingSystem() : super(Aspect.getAspectForAllOf([Effect]));
 
