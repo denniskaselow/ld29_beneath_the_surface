@@ -258,6 +258,7 @@ class EnemyWithTrapCollisionSystem extends EntityProcessingSystem {
           gameState.kills++;
           if (gameState.kills % 10 == 0) {
             gameState.chests++;
+            eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Killed Enemies', '${gameState.kills}'));
           }
           bloodRect = enemyRectAtPos;
         } else {
