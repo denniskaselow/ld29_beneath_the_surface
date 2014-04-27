@@ -224,6 +224,7 @@ class EnemyWithTrapCollisionSystem extends EntityProcessingSystem {
           eventBus.fire(enemyDiedEvent, new EnemyDiedEvent());
           entity.deleteFromWorld();
 
+          gameState.kills++;
           bloodRect = enemyRectAtPos;
         } else {
           entity.addComponent(new Invulnerability());
@@ -277,6 +278,21 @@ class EffectDecayingSystem extends EntityProcessingSystem {
   void processEntity(Entity entity) {
     var e = em.get(entity);
     if (e.alpha == 0.0) {
+      entity.deleteFromWorld();
+    }
+  }
+}
+
+class TreasureChamberSystem extends EntityProcessingSystem {
+  ComponentMapper<Transform> tm;
+  TreasureChamberSystem() : super(Aspect.getAspectForAllOf([Enemy, Transform]));
+
+  @override
+  void processEntity(Entity entity) {
+    var pos = tm.get(entity).pos;
+
+    if (pos.x > 1300.0) {
+      gameState.chests -= 1;
       entity.deleteFromWorld();
     }
   }

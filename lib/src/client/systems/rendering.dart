@@ -153,3 +153,34 @@ class DebugRenderingSystem extends EntityProcessingSystem {
     return new Rectangle(rect.left + pos.x, rect.top + pos.y, rect.width, rect.height);
   }
 }
+
+class LosingScreenRenderSystem extends VoidEntitySystem {
+  static const headline = 'You have failed!';
+  CanvasElement canvas;
+  CanvasQuery buffer;
+  LosingScreenRenderSystem(this.canvas);
+
+  @override
+  void initialize() {
+    buffer = cq(canvas.width, canvas.height);
+    buffer..textBaseline = 'top'
+          ..roundRect(canvas.width ~/ 2 - 200, canvas.height ~/ 2 - 100, 400, 200, 20, strokeStyle: 'black', fillStyle: '#743f3f')
+          ..font = '30px Verdana';
+    var headlineBounds = buffer.textBoundaries(headline);
+
+    buffer..wrappedText(headline, canvas.width ~/ 2 - headlineBounds.width ~/ 2, canvas.height ~/ 2 - 100, 360)
+          ..font = '18px Verdana';
+  }
+
+  @override
+  void processSystem() {
+    buffer..wrappedText('''
+The heroes have looted all the treasure chests!
+The lord of the castle isn't satisified with your performance.
+You only killed ${gameState.kills} heroes.
+    ''', canvas.width ~/ 2 - 180, canvas.height ~/ 2 - 60, 360);
+    canvas.context2D.drawImage(buffer.canvas, 0, 0);
+  }
+
+  bool checkProcessing() => gameState.lost;
+}

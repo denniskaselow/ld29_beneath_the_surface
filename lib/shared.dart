@@ -13,5 +13,18 @@ const GROUP_TRAPS = 'traps';
 
 final tweenManager = new TweenManager();
 final enemyDiedEvent = new EventType<EnemyDiedEvent>();
+final gameState = new GameState();
 
 class EnemyDiedEvent {}
+
+class GameState {
+  int chests = 1;
+  int kills = 0;
+
+  bool get lost => chests == 0;
+
+  void reset() {
+    chests = 5;
+    kills = 0;
+  }
+}
