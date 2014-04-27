@@ -24,7 +24,7 @@ class Game extends GameBase {
   @override
   void createEntities() {
     addEntity([new PlayerInput(), new Transform(1200, 575), new Spatial('player'), new Acceleration(), new Velocity(), new BodyRect(spriteSheet.sprites['player'].dst)]);
-    addEntity([new Enemy(), new Transform(0, 275), new Spatial('stickman'), new Acceleration(), new Velocity(), new Mass(), new BodyRect(spriteSheet.sprites['stickman'].dst)]);
+    addEntity([new Enemy(), new Transform(0, 270), new Spatial('stickman'), new Acceleration(), new Velocity(), new Mass(), new BodyRect(spriteSheet.sprites['stickman'].dst)]);
   }
 
   @override

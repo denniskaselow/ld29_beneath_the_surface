@@ -58,7 +58,7 @@ class MovementSystem extends EntityProcessingSystem {
 
     t.pos = t.pos + v.value / world.delta;
     // tile below
-    if (tileMap[2 + (t.pos.y - 25) ~/ 50][(t.pos.x + 25) ~/ 50] == true) {
+    if (tileMap[2 + (t.pos.y - 24) ~/ 50][(t.pos.x + 25) ~/ 50] == true) {
       t.pos.y = (t.pos.y ~/ 50) * 50.0 + 25.0;
       v.value.y = 0.0;
       entity.removeComponent(InAir);
@@ -66,8 +66,8 @@ class MovementSystem extends EntityProcessingSystem {
       entity.addComponent(new InAir());
     }
     // tile to the right
-    if (tileMap[1 + t.pos.y ~/ 50][(t.pos.x + 25.0 + rect.width / 2) ~/ 50] == true) {
-      t.pos.x = (t.pos.x ~/ 50) * 50.0 + rect.width;
+    if (tileMap[(t.pos.y) ~/ 50][(t.pos.x + 25.0 + rect.width / 2) ~/ 50] == true) {
+      t.pos.x = ((t.pos.x + 25 + rect.width / 2) ~/ 50) * 50.0 - (50 + rect.width) / 2;
       v.value.x = 0.0;
     }
     entity.changedInWorld();
@@ -161,7 +161,8 @@ class GravitySysteme extends EntityProcessingSystem {
   void processEntity(Entity entity) {
     var a = am.get(entity);
 
-    a.value.y = 10.0;
+    // 50px == 1m
+    a.value.y = 500.0 / world.delta;
   }
 }
 
