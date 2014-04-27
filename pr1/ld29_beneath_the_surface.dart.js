@@ -7980,7 +7980,7 @@ C.ol.oB(z,W.VF(new Y.mB(this)))}},
 R5:{
 "^":"Tp:201;a,b",
 call$1:[function(a){var z,y,x,w,v,u,t,s,r,q,p,o,n,m,l,k
-z=J.uH(a,new H.VR(H.v4("\r\n",!1,!0,!1),null,null))
+z=J.uH(a,new H.VR(H.v4("\n",!1,!0,!1),null,null))
 y=this.a
 x=z.length
 w=Array(x)
