@@ -125,6 +125,16 @@ class Game extends GameBase {
               gm.add(e, GROUP_TRAPS);
               tileMap[y][x] = false;
               break;
+            case 'M':
+              addEntity([new Transform(x * 50, y * 50), new Wall(), new Spatial('wall')]);
+              var e = addEntity([new Transform(x * 50, y * 50),
+                                 new Trap(),
+                                 new Spatial('saw'),
+                                 new BodyRect(spriteSheet.sprites['saw'].dst),
+                                 new Controller(x * 50, timer: 3000.0),
+                                 new TrapMover([new Vector2(0.0, -25.0), new Vector2(-100.0, 0.0), new Vector2(100.0, 0.0), new Vector2(0.0, 25.0)], [Quint.OUT, Cubic.INOUT, Cubic.INOUT, Quint.IN], [0.05, 0.45, 0.45, 0.05], 50.0)]);
+              gm.add(e, GROUP_TRAPS);
+              break;
             default:
               tileMap[y][x] = false;
               break;

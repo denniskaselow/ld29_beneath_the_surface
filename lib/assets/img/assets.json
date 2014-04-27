@@ -2,7 +2,7 @@
 
 "arrow_from_left":
 {
-	"frame": {"x":2,"y":242,"w":32,"h":10},
+	"frame": {"x":2,"y":244,"w":32,"h":10},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":7,"y":20,"w":32,"h":10},
@@ -96,9 +96,17 @@
 	"spriteSourceSize": {"x":6,"y":4,"w":38,"h":96},
 	"sourceSize": {"w":50,"h":100}
 },
+"saw":
+{
+	"frame": {"x":2,"y":204,"w":38,"h":38},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":6,"y":6,"w":38,"h":38},
+	"sourceSize": {"w":50,"h":50}
+},
 "shooter_left":
 {
-	"frame": {"x":2,"y":204,"w":38,"h":36},
+	"frame": {"x":52,"y":134,"w":38,"h":36},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":9,"w":38,"h":36},
@@ -135,6 +143,6 @@
 	"format": "RGBA8888",
 	"size": {"w":128,"h":256},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:68976c641e4db9f93c31ddecc58006b0:a8810da47441719f4cdcc3bafae10ef5:a759b6bbc8381ac9c472b28f589ad0d6$"
+	"smartupdate": "$TexturePacker:SmartUpdate:00d115b48fd81ca48f9353b07d66acfc:09eab59b14ee928bc8cfd5170e914157:a759b6bbc8381ac9c472b28f589ad0d6$"
 }
 }
