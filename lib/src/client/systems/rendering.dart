@@ -280,3 +280,17 @@ Now it's your duty to keep all the traps running to protect the treasur chest of
 
   bool checkProcessing() => !gameState.running;
 }
+
+class ChestRenderingSystem extends VoidEntitySystem {
+  CanvasRenderingContext2D ctx;
+  SpriteSheet sheet;
+  ChestRenderingSystem(this.ctx, this.sheet);
+
+  @override
+  void processSystem() {
+    var chest = sheet.sprites['chest'];
+    for (int i = 0; i < gameState.chests; i++) {
+      ctx.drawImageScaledFromSource(sheet.image, chest.src.left, chest.src.top, chest.src.width, chest.src.height, 50 + i * 50, 650, chest.dst.width, chest.dst.height);
+    }
+  }
+}

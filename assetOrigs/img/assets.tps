@@ -199,6 +199,7 @@
             <filename>stick_3.png</filename>
             <filename>green_hedgehog.png</filename>
             <filename>mexican_plumber.png</filename>
+            <filename>chest.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

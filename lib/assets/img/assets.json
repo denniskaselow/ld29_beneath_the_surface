@@ -48,6 +48,14 @@
 	"spriteSourceSize": {"x":2,"y":4,"w":12,"h":10},
 	"sourceSize": {"w":16,"h":16}
 },
+"chest":
+{
+	"frame": {"x":90,"y":2,"w":38,"h":38},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":6,"y":6,"w":38,"h":38},
+	"sourceSize": {"w":50,"h":50}
+},
 "controller_off":
 {
 	"frame": {"x":66,"y":68,"w":14,"h":14},
@@ -154,7 +162,7 @@
 },
 "shooter_left":
 {
-	"frame": {"x":90,"y":2,"w":38,"h":36},
+	"frame": {"x":94,"y":42,"w":38,"h":36},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":9,"w":38,"h":36},
@@ -162,7 +170,7 @@
 },
 "spikes":
 {
-	"frame": {"x":94,"y":40,"w":50,"h":30},
+	"frame": {"x":130,"y":2,"w":50,"h":30},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":10,"w":50,"h":30},
@@ -223,6 +231,6 @@
 	"format": "RGBA8888",
 	"size": {"w":256,"h":256},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:0b2f28c7b6286079bbf6839b9fb75c00:de4cf38d4efa314c213a8ee6d3de49c9:a759b6bbc8381ac9c472b28f589ad0d6$"
+	"smartupdate": "$TexturePacker:SmartUpdate:8c01c554d6aed7ac6098725ec2f89950:12275c1cbc457e1f93f3ecf3523c2cc3:a759b6bbc8381ac9c472b28f589ad0d6$"
 }
 }
