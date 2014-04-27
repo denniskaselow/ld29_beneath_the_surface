@@ -49,7 +49,7 @@ class EnemySpawningSystem extends VoidEntitySystem {
 
   @override
   void processSystem() {
-    var enemyType = random.nextInt(2);
+    var enemyType = random.nextInt(3);
     switch(enemyType) {
       case 0:
         world.createAndAddEntity([new Enemy('stick', health: 1 + random.nextInt(2)),
@@ -68,6 +68,15 @@ class EnemySpawningSystem extends VoidEntitySystem {
                                   new Velocity(),
                                   new Mass(),
                                   new BodyRect(sheet.sprites['green_hedgehog'].dst)]);
+        break;
+      case 2:
+        world.createAndAddEntity([new Enemy('blood', health: 2 + random.nextInt(2)),
+                                  new Transform(0, 275),
+                                  new Spatial('mexican_plumber'),
+                                  new Acceleration(),
+                                  new Velocity(),
+                                  new Mass(),
+                                  new BodyRect(sheet.sprites['mexican_plumber'].dst)]);
         break;
     }
   }

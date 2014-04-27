@@ -189,7 +189,6 @@
             <filename>shooter_left.png</filename>
             <filename>arrow_from_left.png</filename>
             <filename>saw.png</filename>
-            <filename>green_hedgehodge.png</filename>
             <filename>ring_0.png</filename>
             <filename>ring_1.png</filename>
             <filename>ring_2.png</filename>
@@ -198,6 +197,8 @@
             <filename>stick_1.png</filename>
             <filename>stick_2.png</filename>
             <filename>stick_3.png</filename>
+            <filename>green_hedgehog.png</filename>
+            <filename>mexican_plumber.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
