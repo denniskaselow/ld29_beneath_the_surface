@@ -65,7 +65,7 @@ class Game extends GameBase {
 
     var gm = world.getManager(GroupManager);
     return HttpRequest.getString('packages/ld29_beneath_the_surface/assets/levels/level0.txt').then((content) {
-      var rows = content.split(new RegExp('\r\n'));
+      var rows = content.split(new RegExp('\n'));
       tileMap = new List(rows.length);
       for (int y = rows.length - 1; y >= 0; y--) {
         var tiles = rows[y].split('');

@@ -202,8 +202,6 @@ class EnemyWithTrapCollisionSystem extends EntityProcessingSystem {
       var trapRect = brm.get(trap).value;
       Rectangle trapRectAtPos = getRectAtPos(trapRect, trapPos);
       if (trapRectAtPos.intersects(enemyRectAtPos)) {
-        print(trapRectAtPos);
-        print(enemyRectAtPos);
         var e = em.get(entity);
         e.health -= 1;
         if (e.health == 0) {
