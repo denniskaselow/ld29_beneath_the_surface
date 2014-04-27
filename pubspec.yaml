@@ -7,7 +7,8 @@ dependencies:
   gamedev_helpers:
     git: https://github.com/denniskaselow/gamedev_helpers
   hop: any
+  lawndart: any
   tweenengine: any
 transformers:
 - $dart2js:
-    minify: true
+    minify: 'true'

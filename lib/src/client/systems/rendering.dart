@@ -281,10 +281,10 @@ Now it's your duty to keep all the traps running to protect the treasur chest of
   bool checkProcessing() => !gameState.running;
 }
 
-class ChestRenderingSystem extends VoidEntitySystem {
+class GameStateRenderingSystem extends VoidEntitySystem {
   CanvasRenderingContext2D ctx;
   SpriteSheet sheet;
-  ChestRenderingSystem(this.ctx, this.sheet);
+  GameStateRenderingSystem(this.ctx, this.sheet);
 
   @override
   void processSystem() {
@@ -292,5 +292,12 @@ class ChestRenderingSystem extends VoidEntitySystem {
     for (int i = 0; i < gameState.chests; i++) {
       ctx.drawImageScaledFromSource(sheet.image, chest.src.left, chest.src.top, chest.src.width, chest.src.height, 50 + i * 50, 650, chest.dst.width, chest.dst.height);
     }
+    var killWidth = ctx.measureText('${gameState.kills}').width;
+    var bestKillWidth = ctx.measureText('${gameState.bestKills}').width;
+    ctx..fillText('Defeated Hearoes (current):', 1000, 650)
+       ..fillText('${gameState.kills}', 1250 - killWidth, 650)
+       ..fillText('Defeated Hearoes (best):', 1000, 675)
+       ..fillText('${gameState.bestKills}', 1250 - bestKillWidth, 675);
   }
 }
+

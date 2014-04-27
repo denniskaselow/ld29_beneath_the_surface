@@ -13,7 +13,8 @@ import 'package:ld29_beneath_the_surface/client.dart';
                              SpatialRenderingSystem, EffectMovementSystem,
                              EffectRenderingSystem, EffectDecayingSystem,
                              TreasureChamberSystem, LosingScreenRenderSystem,
-                             StartMenuRenderingSystem, ChestRenderingSystem
+                             StartMenuRenderingSystem, GameStateRenderingSystem,
+                             HighScoreSavingSystem
                             ])
 import 'dart:mirrors';
 
@@ -55,7 +56,7 @@ class Game extends GameBase {
             new ControllerRenderingSystem(ctx, spriteSheet),
             new EnemyRenderingSystem(ctx, spriteSheet),
             new PlayerRenderingSystem(ctx, spriteSheet),
-            new ChestRenderingSystem(ctx, spriteSheet),
+            new GameStateRenderingSystem(ctx, spriteSheet),
             new EffectRenderingSystem(ctx, spriteSheet),
             new LosingScreenRenderSystem(canvas),
             new StartMenuRenderingSystem(canvas),
@@ -65,6 +66,7 @@ class Game extends GameBase {
             new EffectDecayingSystem(),
             new TreasureChamberSystem(),
             new EnemySpawningSystem(spriteSheet),
+            new HighScoreSavingSystem(),
             new AnalyticsSystem(AnalyticsSystem.GITHUB, 'ld29_beneath_the_surface')
     ];
   }

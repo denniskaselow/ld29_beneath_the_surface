@@ -95,3 +95,30 @@ class EnemySpawningSystem extends VoidEntitySystem {
   @override
   bool checkProcessing() => gameState.gameRunning && world.frame % mod == spawnOnFrame;
 }
+
+
+class HighScoreSavingSystem extends IntervalEntitySystem {
+  static const KEY = 'highScore';
+  Store store;
+  HighScoreSavingSystem() : super(1000, Aspect.getEmpty());
+
+  initialize() {
+    store = new Store('ld29', 'kills');
+    store.open().then((_) {
+      store.getByKey(KEY).then((value) {
+        if (null != value) {
+          gameState.bestKills = value;
+        }
+      });
+    });
+  }
+
+  @override
+  processEntities(_) {
+    store.getByKey(KEY).then((value) {
+      if (null == value || value < gameState.kills) {
+        store.save(gameState.kills, KEY);
+      }
+    });
+  }
+}
