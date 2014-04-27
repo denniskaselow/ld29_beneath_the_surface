@@ -2,6 +2,7 @@ library shared;
 
 import 'package:gamedev_helpers/gamedev_helpers_shared.dart';
 import 'package:tweenengine/tweenengine.dart';
+export 'package:tweenengine/tweenengine.dart';
 
 part 'src/shared/components.dart';
 

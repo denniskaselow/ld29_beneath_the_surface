@@ -150,15 +150,14 @@ class TrapMovementSystem extends EntityProcessingSystem {
     var om = omm.get(entity);
     var ot = otm.get(entity);
 
-    Timeline.createSequence()
-        ..push(Tween.to(t, Transform.TWEEN_POS, ot.timeLeft * 0.1)
-            ..targetRelative = [om.maxMovement.x, om.maxMovement.y]
-            ..easing = Quint.OUT)
-        ..pushPause(1000.0)
-        ..push(Tween.to(t, Transform.TWEEN_POS, ot.timeLeft * 0.9)
-            ..targetRelative = [-om.maxMovement.x, -om.maxMovement.y]
-            ..easing = Quint.IN)
-        ..start(tweenManager);
+    var sequence = Timeline.createSequence();
+    for (int i = 0; i < om.equations.length; i++) {
+      sequence..push(Tween.to(t, Transform.TWEEN_POS, ot.timeLeft * om.tweenWeights[i])
+                          ..targetRelative = [om.maxMovement[i].x, om.maxMovement[i].y]
+                          ..easing = om.equations[i])
+              ..pushPause(om.pause);
+    }
+    sequence.start(tweenManager);
 
     entity.removeComponent(TrapTimer);
     entity.changedInWorld();

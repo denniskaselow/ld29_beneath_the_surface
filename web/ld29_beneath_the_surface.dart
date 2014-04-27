@@ -86,7 +86,7 @@ class Game extends GameBase {
                                  new Spatial('spikes'),
                                  new BodyRect(spriteSheet.sprites['spikes'].dst),
                                  new Controller(),
-                                 new TrapMover(0.0, 25.0)]);
+                                 new TrapMover([new Vector2(0.0, 25.0), new Vector2(0.0, -25.0)], [Quint.OUT, Quint.IN], [0.1, 0.9], 1000.0)]);
               gm.add(e, GROUP_TRAPS);
               break;
             case '^':
@@ -96,8 +96,25 @@ class Game extends GameBase {
                                  new Spatial('spikes'),
                                  new BodyRect(spriteSheet.sprites['spikes'].dst),
                                  new Controller(),
-                                 new TrapMover(0.0, -25.0)]);
+                                 new TrapMover([new Vector2(0.0, -25.0), new Vector2(0.0, 25.0)], [Quint.OUT, Quint.IN], [0.1, 0.9], 1000.0)]);
               gm.add(e, GROUP_TRAPS);
+              break;
+            case 'l':
+              addEntity([new Transform(x * 50, y * 50), new Background(), new Spatial('background')]);
+              addEntity([new Transform(x * 50, y * 50), new Wall(), new Spatial('lava')]);
+              tileMap[y][x] = false;
+              break;
+            case 'L':
+              addEntity([new Transform(x * 50, y * 50), new Background(), new Spatial('background')]);
+              addEntity([new Transform(x * 50, y * 50), new Wall(), new Spatial('lava_top')]);
+              var e = addEntity([new Transform(x * 50, y * 50),
+                                 new Trap(),
+                                 new Spatial('fire_bottom'),
+                                 new BodyRect(spriteSheet.sprites['fire_bottom'].dst),
+                                 new Controller(timer: 1500.0),
+                                 new TrapMover([new Vector2(0.0, -100.0), new Vector2(0.0, 100.0)], [Sine.OUT, Sine.IN], [0.5, 0.5], 0.0)]);
+              gm.add(e, GROUP_TRAPS);
+              tileMap[y][x] = false;
               break;
             default:
               addEntity([new Transform(x * 50, y * 50), new Background(), new Spatial('background')]);

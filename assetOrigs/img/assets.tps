@@ -183,6 +183,9 @@
             <filename>blood_1.png</filename>
             <filename>blood_2.png</filename>
             <filename>blood_3.png</filename>
+            <filename>lava.png</filename>
+            <filename>lava_top.png</filename>
+            <filename>fire_bottom.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -1,7 +1,7 @@
 library client;
 
-import 'dart:html';
-export 'dart:html';
+import 'dart:html' hide Timeline;
+export 'dart:html' hide Timeline;
 
 import 'package:ld29_beneath_the_surface/shared.dart';
 export 'package:ld29_beneath_the_surface/shared.dart';

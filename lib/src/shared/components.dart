@@ -72,9 +72,11 @@ class Velocity extends Component {
 }
 
 class TrapMover extends Component {
-  Vector2 maxMovement;
-  Vector2 currentMovement = new Vector2.zero();
-  TrapMover(num x, num y) : maxMovement = new Vector2(x.toDouble(), y.toDouble());
+  List<Vector2> maxMovement;
+  List<TweenEquation> equations;
+  List<double> tweenWeights;
+  double pause;
+  TrapMover(this.maxMovement, this.equations, this.tweenWeights, this.pause);
 }
 
 class BodyRect extends Component {
