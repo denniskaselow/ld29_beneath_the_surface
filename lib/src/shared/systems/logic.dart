@@ -126,6 +126,7 @@ class ControllerActivatioSystem extends EntityProcessingSystem {
           controllerEntity.addComponent(new TrapTimer(timeLeft: controller.timer));
           controllerEntity.changedInWorld();
           controller.timeLeft = controller.timer + 1200.0;
+          world.createAndAddEntity([new Sound(controller.sound)]);
           var label = sm.get(controllerEntity).sprite;
           eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Activate Trap', label));
         }
@@ -247,6 +248,7 @@ class EnemyWithTrapCollisionSystem extends EntityProcessingSystem {
         var e = em.get(entity);
         e.health -= 1;
         Rectangle bloodRect;
+        world.createAndAddEntity([new Sound('ouch_${random.nextInt(2)}')]);
         if (e.health == 0) {
           var label = sm.get(entity).sprite;
           eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Killed Enemy', label));

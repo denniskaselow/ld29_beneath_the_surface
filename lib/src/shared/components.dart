@@ -54,7 +54,8 @@ class Controller extends Component {
   final double timer;
   double timeLeft;
   int x;
-  Controller(this.x, {this.timer: 1000.0});
+  String sound;
+  Controller(this.x, this.sound, {this.timer: 1000.0});
 }
 
 class PlayerInput extends Component {

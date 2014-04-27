@@ -14,7 +14,7 @@ import 'package:ld29_beneath_the_surface/client.dart';
                              EffectRenderingSystem, EffectDecayingSystem,
                              TreasureChamberSystem, LosingScreenRenderSystem,
                              StartMenuRenderingSystem, GameStateRenderingSystem,
-                             HighScoreSavingSystem
+                             HighScoreSavingSystem, EnemySpawningSystem
                             ])
 import 'dart:mirrors';
 
@@ -67,6 +67,7 @@ class Game extends GameBase {
             new TreasureChamberSystem(),
             new EnemySpawningSystem(spriteSheet),
             new HighScoreSavingSystem(),
+            new SoundSystem(helper.audioHelper),
             new AnalyticsSystem(AnalyticsSystem.GITHUB, 'ld29_beneath_the_surface')
     ];
   }
@@ -76,7 +77,7 @@ class Game extends GameBase {
     world.addManager(new GroupManager());
 
     var gm = world.getManager(GroupManager);
-    return HttpRequest.getString('packages/ld29_beneath_the_surface/assets/levels/level0.txt').then((content) {
+    return Future.wait([HttpRequest.getString('packages/ld29_beneath_the_surface/assets/levels/level0.txt').then((content) {
       var rows = content.split(new RegExp('\n'));
       tileMap = new List(rows.length);
       for (int y = rows.length - 1; y >= 0; y--) {
@@ -93,7 +94,7 @@ class Game extends GameBase {
                                  new Trap(),
                                  new Spatial('spikes'),
                                  new BodyRect(spriteSheet.sprites['spikes'].dst),
-                                 new Controller(x * 50),
+                                 new Controller(x * 50, 'spikes'),
                                  new TrapMover([new Vector2(0.0, 25.0), new Vector2(0.0, -25.0)], [Quint.OUT, Quint.IN], [0.1, 0.9], 1000.0)]);
               gm.add(e, GROUP_TRAPS);
               break;
@@ -103,7 +104,7 @@ class Game extends GameBase {
                                  new Trap(),
                                  new Spatial('spikes'),
                                  new BodyRect(spriteSheet.sprites['spikes'].dst),
-                                 new Controller(x * 50),
+                                 new Controller(x * 50, 'spikes'),
                                  new TrapMover([new Vector2(0.0, -25.0), new Vector2(0.0, 25.0)], [Quint.OUT, Quint.IN], [0.1, 0.9], 1000.0)]);
               gm.add(e, GROUP_TRAPS);
               break;
@@ -113,7 +114,7 @@ class Game extends GameBase {
                                  new Trap(),
                                  new Spatial('arrow_from_left'),
                                  new BodyRect(spriteSheet.sprites['arrow_from_left'].dst),
-                                 new Controller(x * 50),
+                                 new Controller(x * 50, 'arrow'),
                                  new TrapMover([new Vector2(450.0, 0.0), new Vector2(-450.0, 0.0)], [Linear.INOUT, Linear.INOUT], [1.0, 0.0], 0.0)]);
               gm.add(e, GROUP_TRAPS);
               tileMap[y][x] = false;
@@ -128,7 +129,7 @@ class Game extends GameBase {
                                  new Trap(),
                                  new Spatial('fire_bottom'),
                                  new BodyRect(spriteSheet.sprites['fire_bottom'].dst),
-                                 new Controller(x * 50, timer: 1500.0),
+                                 new Controller(x * 50, 'fire', timer: 1500.0),
                                  new TrapMover([new Vector2(0.0, -100.0), new Vector2(0.0, 100.0)], [Sine.OUT, Sine.IN], [0.5, 0.5], 0.0)]);
               gm.add(e, GROUP_TRAPS);
               tileMap[y][x] = false;
@@ -139,7 +140,7 @@ class Game extends GameBase {
                                  new Trap(),
                                  new Spatial('saw'),
                                  new BodyRect(spriteSheet.sprites['saw'].dst),
-                                 new Controller(x * 50, timer: 3000.0),
+                                 new Controller(x * 50, 'saw', timer: 3000.0),
                                  new TrapMover([new Vector2(0.0, -25.0), new Vector2(-100.0, 0.0), new Vector2(100.0, 0.0), new Vector2(0.0, 25.0)], [Quint.OUT, Cubic.INOUT, Cubic.INOUT, Quint.IN], [0.05, 0.45, 0.45, 0.05], 50.0)]);
               gm.add(e, GROUP_TRAPS);
               break;
@@ -150,7 +151,7 @@ class Game extends GameBase {
           addEntity([new Transform(x * 50, y * 50), new Background(), new Spatial('background')]);
         }
       }
-    });
+    }), helper.audioHelper.loadAudioClips(['fire', 'spikes', 'arrow', 'saw', 'ouch_0', 'ouch_1'])]);
   }
 
   void update({double time}) {
