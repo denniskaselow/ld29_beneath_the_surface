@@ -70,6 +70,12 @@ class MovementSystem extends EntityProcessingSystem {
       t.pos.x = ((t.pos.x + 25 + rect.width / 2) ~/ 50) * 50.0 - (50 + rect.width) / 2;
       v.value.x = 0.0;
     }
+    // tile to the left
+    var xIndex = (t.pos.x + 25.0 - rect.width / 2) ~/ 50;
+    if (xIndex >= 0 && tileMap[(t.pos.y) ~/ 50][xIndex] == true) {
+      t.pos.x = xIndex * 50.0 + (50 + rect.width) / 2;
+      v.value.x = 0.0;
+    }
     entity.changedInWorld();
   }
 }
