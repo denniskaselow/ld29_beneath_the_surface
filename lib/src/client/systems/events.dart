@@ -40,7 +40,13 @@ class EnemySpawningSystem extends VoidEntitySystem {
   SpriteSheet sheet;
   int spawnOnFrame = 1;
   int mod = 1000;
+  GroupManager gm;
   EnemySpawningSystem(this.sheet);
+
+  void reset() {
+    mod = 1000;
+    spawnOnFrame = (world.frame + 1) % mod;
+  }
 
   @override
   void initialize() {
@@ -53,9 +59,10 @@ class EnemySpawningSystem extends VoidEntitySystem {
   @override
   void processSystem() {
     var enemyType = random.nextInt(3);
+    var enemy;
     switch(enemyType) {
       case 0:
-        world.createAndAddEntity([new Enemy('stick', health: 1 + random.nextInt(2)),
+        enemy = world.createAndAddEntity([new Enemy('stick', health: 1 + random.nextInt(2)),
                                   new Transform(0, 275),
                                   new Spatial('stickman'),
                                   new Acceleration(),
@@ -64,7 +71,7 @@ class EnemySpawningSystem extends VoidEntitySystem {
                                   new BodyRect(sheet.sprites['stickman'].dst)]);
         break;
       case 1:
-        world.createAndAddEntity([new Enemy('ring', health: 2 + random.nextInt(2)),
+        enemy = world.createAndAddEntity([new Enemy('ring', health: 2 + random.nextInt(2)),
                                   new Transform(0, 275),
                                   new Spatial('green_hedgehog'),
                                   new Acceleration(),
@@ -73,7 +80,7 @@ class EnemySpawningSystem extends VoidEntitySystem {
                                   new BodyRect(sheet.sprites['green_hedgehog'].dst)]);
         break;
       case 2:
-        world.createAndAddEntity([new Enemy('blood', health: 2 + random.nextInt(2)),
+        enemy = world.createAndAddEntity([new Enemy('blood', health: 2 + random.nextInt(2)),
                                   new Transform(0, 275),
                                   new Spatial('mexican_plumber'),
                                   new Acceleration(),
@@ -82,6 +89,7 @@ class EnemySpawningSystem extends VoidEntitySystem {
                                   new BodyRect(sheet.sprites['mexican_plumber'].dst)]);
         break;
     }
+    gm.add(enemy, GROUP_ENEMIES);
   }
 
   @override

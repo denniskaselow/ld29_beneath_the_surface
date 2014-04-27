@@ -10,6 +10,7 @@ part 'src/shared/systems/enemy.dart';
 part 'src/shared/systems/logic.dart';
 
 const GROUP_TRAPS = 'traps';
+const GROUP_ENEMIES = 'enemies';
 
 final tweenManager = new TweenManager();
 final enemyDiedEvent = new EventType<EnemyDiedEvent>();
@@ -18,14 +19,15 @@ final gameState = new GameState();
 class EnemyDiedEvent {}
 
 class GameState {
-  int chests = 1;
+  static const CHESTS = 1;
+  int chests = CHESTS;
   int kills = 0;
 
   bool get lost => chests == 0;
   bool get gameRunning => !lost;
 
   void reset() {
-    chests = 5;
+    chests = CHESTS;
     kills = 0;
   }
 }

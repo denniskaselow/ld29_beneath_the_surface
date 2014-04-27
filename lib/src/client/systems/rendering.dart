@@ -156,30 +156,64 @@ class DebugRenderingSystem extends EntityProcessingSystem {
 
 class LosingScreenRenderSystem extends VoidEntitySystem {
   static const headline = 'You have failed!';
+  static const tryAgain = 'Try again!';
   CanvasElement canvas;
   CanvasQuery buffer;
+  Point<num> mousePos = new Point<num>(0, 0);
+  Rectangle headlineBounds;
+  Rectangle tryAgainBounds;
+  Rectangle tryAgainRect;
+  bool clicked = false;
+  EnemySpawningSystem ess;
+  GroupManager gm;
   LosingScreenRenderSystem(this.canvas);
 
   @override
   void initialize() {
     buffer = cq(canvas.width, canvas.height);
     buffer..textBaseline = 'top'
-          ..roundRect(canvas.width ~/ 2 - 200, canvas.height ~/ 2 - 100, 400, 200, 20, strokeStyle: 'black', fillStyle: '#743f3f')
           ..font = '30px Verdana';
-    var headlineBounds = buffer.textBoundaries(headline);
+    headlineBounds = buffer.textBoundaries(headline);
+    tryAgainBounds = buffer.textBoundaries(tryAgain);
+    tryAgainRect = new Rectangle(canvas.width ~/ 2 - tryAgainBounds.width ~/ 2 - 10, canvas.height ~/ 2 + 100 - tryAgainBounds.height - 30, tryAgainBounds.width + 20, tryAgainBounds.height + 20);
 
-    buffer..wrappedText(headline, canvas.width ~/ 2 - headlineBounds.width ~/ 2, canvas.height ~/ 2 - 100, 360)
-          ..font = '18px Verdana';
+    canvas.onMouseMove.listen((event) {
+      if (gameState.lost) {
+        mousePos = event.offset;
+      }
+    });
+    canvas.onMouseDown.listen((event) {
+      if (gameState.lost) {
+        clicked = true;
+      }
+    });
+    canvas.onMouseUp.listen((event) => clicked = false);
   }
 
   @override
   void processSystem() {
-    buffer..wrappedText('''
+    var mouseInTryAgain = tryAgainRect.containsPoint(mousePos);
+    buffer
+      ..clear()
+      ..font = '30px Verdana'
+      ..roundRect(canvas.width ~/ 2 - 200, canvas.height ~/ 2 - 100, 400, 200, 20, strokeStyle: 'black', fillStyle: '#3f3f74')
+      ..wrappedText(headline, canvas.width ~/ 2 - headlineBounds.width ~/ 2, canvas.height ~/ 2 - 100, 360)
+      ..roundRect(tryAgainRect.left, tryAgainRect.top, tryAgainRect.width, tryAgainRect.height, 20, strokeStyle: 'black', fillStyle: mouseInTryAgain ? '#639bff' : '#306082')
+      ..wrappedText(tryAgain, canvas.width ~/ 2 - tryAgainBounds.width ~/ 2, canvas.height ~/ 2 + 100 - tryAgainBounds.height - 20, 360)
+      ..font = '18px Verdana'
+      ..wrappedText('''
 The heroes have looted all the treasure chests!
 The lord of the castle isn't satisified with your performance.
 You only killed ${gameState.kills} heroes.
     ''', canvas.width ~/ 2 - 180, canvas.height ~/ 2 - 60, 360);
     canvas.context2D.drawImage(buffer.canvas, 0, 0);
+
+    if (clicked && mouseInTryAgain) {
+      gameState.reset();
+      ess.reset();
+      gm.getEntities(GROUP_ENEMIES).forEach((enemy) => enemy.deleteFromWorld());
+      eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Try again', 'Game'));
+    }
   }
 
   bool checkProcessing() => gameState.lost;
