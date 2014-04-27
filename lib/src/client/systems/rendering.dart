@@ -118,13 +118,13 @@ class ControllerRenderingSystem extends SpatialRenderingSystem {
 
   @override
   void processEntity(Entity entity) {
-    var x = tm.get(entity).pos.x;
-    var state = cm.get(entity).active ? 'on' : 'off';
+    var controller = cm.get(entity);
+    var state = controller.active ? 'on' : 'off';
     var sprite = sheet.sprites['controller_$state'];
     var dst = sprite.dst;
     var src = sprite.src;
     ctx.drawImageScaledFromSource(sheet.image, src.left, src.top, src.width,
-        src.height, dst.left + x, dst.top + 575, dst.width, dst.height);
+        src.height, dst.left + controller.x, dst.top + 575, dst.width, dst.height);
   }
 }
 

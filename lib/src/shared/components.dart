@@ -52,7 +52,8 @@ class Controller extends Component {
   bool active = false;
   final double timer;
   double timeLeft;
-  Controller({this.timer: 1000.0});
+  int x;
+  Controller(this.x, {this.timer: 1000.0});
 }
 
 class PlayerInput extends Component {
