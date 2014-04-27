@@ -187,8 +187,9 @@ class EnemyWithTrapCollisionSystem extends EntityProcessingSystem {
   ComponentMapper<BodyRect> brm;
   ComponentMapper<Transform> tm;
   ComponentMapper<Controller> cm;
+  ComponentMapper<Spatial> sm;
   GroupManager gm;
-  EnemyWithTrapCollisionSystem() : super(Aspect.getAspectForAllOf([Enemy, BodyRect, Transform]).exclude([Invulnerability]));
+  EnemyWithTrapCollisionSystem() : super(Aspect.getAspectForAllOf([Enemy, BodyRect, Transform, Spatial]).exclude([Invulnerability]));
 
 
   @override
@@ -206,6 +207,8 @@ class EnemyWithTrapCollisionSystem extends EntityProcessingSystem {
         var e = em.get(entity);
         e.health -= 1;
         if (e.health == 0) {
+          var label = sm.get(entity).sprite;
+          eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Killed Enemy', label));
           entity.deleteFromWorld();
         } else {
           entity.addComponent(new Invulnerability());

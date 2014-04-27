@@ -9,7 +9,8 @@ import 'package:ld29_beneath_the_surface/client.dart';
                              EnemyRenderingSystem, EnemyAiSystem,
                              GravitySysteme, AccelerationResettingSystem,
                              BackgroundRenderingSystem, EnemyWithTrapCollisionSystem,
-                             DebugRenderingSystem, InvulnerabilityDecayingSystem
+                             DebugRenderingSystem, InvulnerabilityDecayingSystem,
+                             SpatialRenderingSystem
                             ])
 import 'dart:mirrors';
 
@@ -52,7 +53,7 @@ class Game extends GameBase {
             new EnemyRenderingSystem(ctx, spriteSheet),
             new PlayerRenderingSystem(ctx, spriteSheet),
 //            new DebugRenderingSystem(ctx),
-            new FpsRenderingSystem(ctx),
+//            new FpsRenderingSystem(ctx),
             new InvulnerabilityDecayingSystem(),
             new AnalyticsSystem(AnalyticsSystem.GITHUB, 'ld29_beneath_the_surface')
     ];
@@ -102,6 +103,11 @@ class Game extends GameBase {
         }
       }
     });
+  }
+
+  void update({double time}) {
+    world.process();
+    window.requestAnimationFrame((time) => update(time: time));
   }
 
 }
