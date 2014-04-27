@@ -30,6 +30,7 @@ class Transform extends Component implements Tweenable {
   }
 }
 
+class Background extends Component {}
 class Wall extends Component {}
 class Enemy extends Component {}
 class Trap extends Component {}

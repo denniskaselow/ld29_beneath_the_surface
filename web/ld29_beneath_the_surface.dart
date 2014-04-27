@@ -7,7 +7,8 @@ import 'package:ld29_beneath_the_surface/client.dart';
                              MovementSystem, ControllerActivatioSystem,
                              TrapMovementSystem, ControllerDelaySystm,
                              EnemyRenderingSystem, EnemyAiSystem,
-                             GravitySysteme, AccelerationResettingSystem
+                             GravitySysteme, AccelerationResettingSystem,
+                             BackgroundRenderingSystem
                             ])
 import 'dart:mirrors';
 
@@ -42,6 +43,7 @@ class Game extends GameBase {
             new ControllerActivatioSystem(),
             new TrapMovementSystem(),
             new CanvasCleaningSystem(canvas),
+            new BackgroundRenderingSystem(canvas, spriteSheet),
             new TrapRenderingSystem(ctx, spriteSheet),
             new WallRenderingSystem(canvas, spriteSheet),
             new ControllerRenderingSystem(ctx, spriteSheet),
@@ -79,7 +81,9 @@ class Game extends GameBase {
               gm.add(e, GROUP_CONTROLLER);
               break;
             default:
+              addEntity([new Transform(x * 50, y * 50), new Background(), new Spatial('background')]);
               tileMap[y][x] = false;
+              break;
           }
         }
       }

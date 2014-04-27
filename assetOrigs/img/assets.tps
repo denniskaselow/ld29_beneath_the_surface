@@ -178,6 +178,8 @@
             <filename>controller_on.png</filename>
             <filename>player.png</filename>
             <filename>stickman.png</filename>
+            <filename>background.png</filename>
+            <filename>background_door.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
