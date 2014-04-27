@@ -267,8 +267,8 @@ class StartMenuRenderingSystem extends VoidEntitySystem {
       ..wrappedText(startGame, canvas.width ~/ 2 - startGameBounds.width ~/ 2, canvas.height ~/ 2 + 100 - startGameBounds.height - 20, 560)
       ..font = '18px Verdana'
       ..wrappedText('''
-Usually, one engineer is responsible for one trap. but today, everyone has gone to the beach, except you.
-Now it's your duty to keep all the traps running to protect the treasur chest of your Demon Lord.
+Usually, one engineer is responsible for one trap. but today, everyone has gone to the beach, except for you.
+Now it's your duty to keep all the traps running to protect the treasure chest of your Demon Lord.
     ''', canvas.width ~/ 2 - 280, canvas.height ~/ 2 - 60, 560);
     canvas.context2D.drawImage(buffer.canvas, 0, 0);
 
