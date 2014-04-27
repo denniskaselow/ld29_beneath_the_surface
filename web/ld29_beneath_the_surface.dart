@@ -12,7 +12,8 @@ import 'package:ld29_beneath_the_surface/client.dart';
                              DebugRenderingSystem, InvulnerabilityDecayingSystem,
                              SpatialRenderingSystem, EffectMovementSystem,
                              EffectRenderingSystem, EffectDecayingSystem,
-                             TreasureChamberSystem, LosingScreenRenderSystem
+                             TreasureChamberSystem, LosingScreenRenderSystem,
+                             StartMenuRenderingSystem
                             ])
 import 'dart:mirrors';
 
@@ -56,6 +57,7 @@ class Game extends GameBase {
             new PlayerRenderingSystem(ctx, spriteSheet),
             new EffectRenderingSystem(ctx, spriteSheet),
             new LosingScreenRenderSystem(canvas),
+            new StartMenuRenderingSystem(canvas),
 //            new DebugRenderingSystem(ctx),
 //            new FpsRenderingSystem(ctx),
             new InvulnerabilityDecayingSystem(),

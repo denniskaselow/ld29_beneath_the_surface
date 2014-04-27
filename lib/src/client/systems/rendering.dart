@@ -218,3 +218,65 @@ You only killed ${gameState.kills} heroes.
 
   bool checkProcessing() => gameState.lost;
 }
+
+class StartMenuRenderingSystem extends VoidEntitySystem {
+  static const headline = 'Welcome castle engineer!';
+  static const startGame = 'Start game';
+  CanvasElement canvas;
+  CanvasQuery buffer;
+  Point<num> mousePos = new Point<num>(0, 0);
+  Rectangle headlineBounds;
+  Rectangle startGameBounds;
+  Rectangle startGameRect;
+  bool clicked = false;
+  EnemySpawningSystem ess;
+  GroupManager gm;
+  StartMenuRenderingSystem(this.canvas);
+
+  @override
+  void initialize() {
+    buffer = cq(canvas.width, canvas.height);
+    buffer..textBaseline = 'top'
+          ..font = '30px Verdana';
+    headlineBounds = buffer.textBoundaries(headline);
+    startGameBounds = buffer.textBoundaries(startGame);
+    startGameRect = new Rectangle(canvas.width ~/ 2 - startGameBounds.width ~/ 2 - 10, canvas.height ~/ 2 + 100 - startGameBounds.height - 30, startGameBounds.width + 20, startGameBounds.height + 20);
+
+    canvas.onMouseMove.listen((event) {
+      if (!gameState.running) {
+        mousePos = event.offset;
+      }
+    });
+    canvas.onMouseDown.listen((event) {
+      if (!gameState.running) {
+        clicked = true;
+      }
+    });
+    canvas.onMouseUp.listen((event) => clicked = false);
+  }
+
+  @override
+  void processSystem() {
+    var mouseInStartGame = startGameRect.containsPoint(mousePos);
+    buffer
+      ..clear()
+      ..font = '30px Verdana'
+      ..roundRect(canvas.width ~/ 2 - 300, canvas.height ~/ 2 - 100, 600, 200, 20, strokeStyle: 'black', fillStyle: '#3f3f74')
+      ..wrappedText(headline, canvas.width ~/ 2 - headlineBounds.width ~/ 2, canvas.height ~/ 2 - 100, 560)
+      ..roundRect(startGameRect.left, startGameRect.top, startGameRect.width, startGameRect.height, 20, strokeStyle: 'black', fillStyle: mouseInStartGame ? '#639bff' : '#306082')
+      ..wrappedText(startGame, canvas.width ~/ 2 - startGameBounds.width ~/ 2, canvas.height ~/ 2 + 100 - startGameBounds.height - 20, 560)
+      ..font = '18px Verdana'
+      ..wrappedText('''
+Usually, one engineer is responsible for one trap. but today, everyone has gone to the beach, except you.
+Now it's your duty to keep all the traps running to protect the treasur chest of your Demon Lord.
+    ''', canvas.width ~/ 2 - 280, canvas.height ~/ 2 - 60, 560);
+    canvas.context2D.drawImage(buffer.canvas, 0, 0);
+
+    if (clicked && mouseInStartGame) {
+      gameState.running = true;
+      ess.reset();
+    }
+  }
+
+  bool checkProcessing() => !gameState.running;
+}

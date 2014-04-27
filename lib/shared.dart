@@ -22,9 +22,10 @@ class GameState {
   static const CHESTS = 1;
   int chests = CHESTS;
   int kills = 0;
+  bool running = false;
 
   bool get lost => chests == 0;
-  bool get gameRunning => !lost;
+  bool get gameRunning => !lost && running;
 
   void reset() {
     chests = CHESTS;
