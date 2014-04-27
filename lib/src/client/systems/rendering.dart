@@ -124,7 +124,7 @@ class ControllerRenderingSystem extends SpatialRenderingSystem {
     var dst = sprite.dst;
     var src = sprite.src;
     ctx.drawImageScaledFromSource(sheet.image, src.left, src.top, src.width,
-        src.height, dst.left + controller.x, dst.top + 575, dst.width, dst.height);
+        src.height, dst.left + controller.x, dst.top + 550, dst.width, dst.height);
   }
 }
 
