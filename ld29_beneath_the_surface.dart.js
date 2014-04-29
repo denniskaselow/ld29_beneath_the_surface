@@ -2757,11 +2757,11 @@ if(v>u);else v=u
 s=J.cq(y,H.d(v)).width
 v=this.Ee
 y=J.RE(v)
-y.lR(v,"Defeated Hearoes (current):",1000,650)
+y.lR(v,"Defeated Heroes (current):",1000,650)
 u=""+w.H2
 if(typeof t!=="number")return H.s(t)
 y.lR(v,u,1250-t,650)
-y.lR(v,"Defeated Hearoes (best):",1000,675)
+y.lR(v,"Defeated Heroes (best):",1000,675)
 u=w.H2
 w=w.rR
 if(typeof w!=="number")return H.s(w)
