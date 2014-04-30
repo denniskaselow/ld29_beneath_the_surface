@@ -294,9 +294,9 @@ class GameStateRenderingSystem extends VoidEntitySystem {
     }
     var killWidth = ctx.measureText('${gameState.kills}').width;
     var bestKillWidth = ctx.measureText('${gameState.bestKills}').width;
-    ctx..fillText('Defeated Hearoes (current):', 1000, 650)
+    ctx..fillText('Defeated Heroes (current):', 1000, 650)
        ..fillText('${gameState.kills}', 1250 - killWidth, 650)
-       ..fillText('Defeated Hearoes (best):', 1000, 675)
+       ..fillText('Defeated Heroes (best):', 1000, 675)
        ..fillText('${gameState.bestKills}', 1250 - bestKillWidth, 675);
   }
 }
