@@ -14,6 +14,7 @@ class PlayerInputHandlingSystem extends EntityProcessingSystem {
 
   void handleInput(KeyboardEvent event, bool pressed) {
     keyState[event.keyCode] = pressed;
+    event.preventDefault();
   }
 
   @override
