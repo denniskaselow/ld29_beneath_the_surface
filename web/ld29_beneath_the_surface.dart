@@ -26,7 +26,7 @@ class Game extends GameBase {
 
   List<List<bool>> tileMap;
 
-  Game() : super('ld29_beneath_the_surface', 'canvas', 1280, 720, bodyDefsName: null);
+  Game() : super('ld29_beneath_the_surface', 'canvas', 1250, 720, bodyDefsName: null);
 
   @override
   void createEntities() {
@@ -68,7 +68,7 @@ class Game extends GameBase {
             new EnemySpawningSystem(spriteSheet),
             new HighScoreSavingSystem(),
             new SoundSystem(helper.audioHelper),
-            new AnalyticsSystem(AnalyticsSystem.ITCHIO, 'ld29_beneath_the_surface')
+            new AnalyticsSystem(AnalyticsSystem.GITHUB, 'ld29_beneath_the_surface_post_compo')
     ];
   }
 
