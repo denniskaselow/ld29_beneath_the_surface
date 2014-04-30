@@ -2300,7 +2300,9 @@ eQ:[function(){var z=H.VM(new W.RO(window,C.rl.Ph,!1),[null])
 H.VM(new W.Ov(0,z.uv,z.Ph,W.VF(new F.Z7(this)),z.Sg),[H.Kp(z,0)]).Zz()
 z=H.VM(new W.RO(window,C.Z4.Ph,!1),[null])
 H.VM(new W.Ov(0,z.uv,z.Ph,W.VF(new F.S0(this)),z.Sg),[H.Kp(z,0)]).Zz()},"call$0","gu5",0,0,154,"initialize",255],
-Ya:[function(a,b){J.kW(this.Wn,J.Kt(a),b)},"call$2","gH3",4,0,256,101,[],257,[],"handleInput"],
+Ya:[function(a,b){var z=J.RE(a)
+J.kW(this.Wn,z.gIG(a),b)
+z.TI(a)},"call$2","gH3",4,0,256,101,[],257,[],"handleInput"],
 y4:[function(a){var z,y
 z=this.rh.ox(a)
 y=J.RE(z)
@@ -2323,13 +2325,17 @@ return x},null,null,0,0,104,"new PlayerInputHandlingSystem"]}},
 "+PlayerInputHandlingSystem":[261],
 Z7:{
 "^":"Tp:211;a-73",
-call$1:[function(a){J.kW(this.a.gWn(),J.Kt(a),!0)
+call$1:[function(a){var z=J.RE(a)
+J.kW(this.a.gWn(),z.gIG(a),!0)
+z.TI(a)
 return},"call$1",null,2,0,211,101,[],"call"],
 $isEH:true},
 "+ Z7":[262],
 S0:{
 "^":"Tp:211;b-73",
-call$1:[function(a){J.kW(this.b.gWn(),J.Kt(a),!1)
+call$1:[function(a){var z=J.RE(a)
+J.kW(this.b.gWn(),z.gIG(a),!1)
+z.TI(a)
 return},"call$1",null,2,0,211,101,[],"call"],
 $isEH:true},
 "+ S0":[262],
@@ -12732,7 +12738,6 @@ return J.Wx(a).F(a,b)}
 J.Jy=function(a){return J.RE(a).go2(a)}
 J.KV=function(a,b){if(typeof a=="number"&&typeof b=="number")return(a&b)>>>0
 return J.Wx(a).i(a,b)}
-J.Kt=function(a){return J.RE(a).gIG(a)}
 J.LP=function(a,b){return J.RE(a).FL(a,b)}
 J.LT=function(a,b,c){return J.w1(a).Ts(a,b,c)}
 J.Ld=function(a,b){return J.w1(a).eR(a,b)}
