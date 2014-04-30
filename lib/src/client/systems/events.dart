@@ -3,6 +3,7 @@ part of client;
 
 class PlayerInputHandlingSystem extends EntityProcessingSystem {
   ComponentMapper<PlayerInput> pim;
+  var preventDefaultKeys = new Set.from([KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, KeyCode.SPACE]);
   var keyState = <int, bool>{};
   PlayerInputHandlingSystem() : super(Aspect.getAspectForAllOf([PlayerInput]));
 
@@ -14,7 +15,9 @@ class PlayerInputHandlingSystem extends EntityProcessingSystem {
 
   void handleInput(KeyboardEvent event, bool pressed) {
     keyState[event.keyCode] = pressed;
-    event.preventDefault();
+    if (preventDefaultKeys.contains(event.keyCode)) {
+      event.preventDefault();
+    }
   }
 
   @override
