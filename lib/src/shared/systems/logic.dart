@@ -34,11 +34,18 @@ class AccelerationSystem extends EntityProcessingSystem {
     var v = vm.get(entity);
 
     if (a.value.x == 0.0 && a.value.y == 0.0) {
-      Vector2 drag = new Vector2(100 / world.delta, 100 / world.delta);
+      Vector2 drag = new Vector2(100 / world.delta, 0.0);
       Vector2.min(new Vector2.copy(v.value).absolute(), drag, drag);
       drag.x = drag.x * v.value.x.sign;
       drag.y = drag.y * v.value.y.sign;
       v.value -= drag;
+    } else if (a.value.x.sign != v.value.x.sign && a.value.x != 0.0) {
+      Vector2 drag = new Vector2(1.2, 0.0);
+      Vector2.min(new Vector2.copy(v.value).absolute(), drag, drag);
+      drag.x = drag.x * v.value.x.sign;
+      drag.y = 0.0;
+      v.value = v.value - drag + a.value / world.delta;
+      v.value.x = v.value.x.sign * min(v.value.x.abs(), 100.0);
     } else {
       v.value = v.value + a.value / world.delta;
       v.value.x = v.value.x.sign * min(v.value.x.abs(), 100.0);
@@ -81,7 +88,8 @@ class MovementSystem extends EntityProcessingSystem {
 
     t.pos = t.pos + v.value / world.delta;
     // tile below
-    if (tileMap[2 + (t.pos.y - 24) ~/ 50][(t.pos.x + 25) ~/ 50] == true) {
+    if (tileMap[2 + (t.pos.y - 24) ~/ 50][(t.pos.x + rect.width / 3 + 25) ~/ 50] == true ||
+        tileMap[2 + (t.pos.y - 24) ~/ 50][(t.pos.x - rect.width / 3 + 25) ~/ 50] == true) {
       t.pos.y = (t.pos.y ~/ 50) * 50.0 + 25.0;
       v.value.y = 0.0;
       entity.removeComponent(InAir);

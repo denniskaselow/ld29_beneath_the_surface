@@ -23,11 +23,11 @@ class EnemyAiSystem extends EntityProcessingSystem {
       a.value.x = world.delta * world.delta * 0.5;
       entity.addComponent(new InAir());
       entity.changedInWorld();
-    } else if (tileMap[2 + (t.pos.y - 25) ~/ 50][(t.pos.x + 50 + rect.width / 2) ~/ 50] == false &&
-        tileMap[2 + (t.pos.y - 25) ~/ 50][3 + (t.pos.x + 50 + rect.width / 2) ~/ 50] == false &&
+    } else if (tileMap[2 + (t.pos.y - 25) ~/ 50][(t.pos.x + 50 + rect.width / 4) ~/ 50] == false &&
+        tileMap[2 + (t.pos.y - 25) ~/ 50][3 + (t.pos.x + 50 + rect.width / 4) ~/ 50] == false &&
         v.value.x > 1.0) {
       // no tiles to the right, caution!
-      a.value.x = world.delta * world.delta * -0.08;
+      a.value.x = world.delta * world.delta * -0.02;
     } else if (tileMap[(t.pos.y - 25) ~/ 50][(t.pos.x + 100 + rect.width / 2) ~/ 50] == true &&
         tileMap[-1 + (t.pos.y - 25) ~/ 50][(t.pos.x + 100 + rect.width / 2) ~/ 50] == false) {
       // a wall, jump onto it

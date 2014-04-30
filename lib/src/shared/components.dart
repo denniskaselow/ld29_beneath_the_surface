@@ -90,7 +90,7 @@ class BodyRect extends Component {
 class InAir extends Component {}
 class Invulnerability extends Component {
   double delay;
-  Invulnerability({this.delay: 1000.0});
+  Invulnerability({this.delay: 750.0});
 }
 
 class Effect extends Component implements Tweenable {

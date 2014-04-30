@@ -40,19 +40,19 @@ class PlayerInputHandlingSystem extends EntityProcessingSystem {
 class EnemySpawningSystem extends VoidEntitySystem {
   SpriteSheet sheet;
   int spawnOnFrame = 1;
-  int mod = 1000;
+  int mod = 600;
   GroupManager gm;
   EnemySpawningSystem(this.sheet);
 
   void reset() {
-    mod = 1000;
+    mod = 600;
     spawnOnFrame = (world.frame + 1) % mod;
   }
 
   @override
   void initialize() {
     eventBus.on(enemyDiedEvent).listen((_) {
-      mod = max(120, (mod * 0.95).toInt());
+      mod = max(120, (mod * 0.975).toInt());
       spawnOnFrame = (world.frame + 100) % mod;
     });
   }

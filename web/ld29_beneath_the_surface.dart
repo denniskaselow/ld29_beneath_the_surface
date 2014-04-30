@@ -68,7 +68,7 @@ class Game extends GameBase {
             new EnemySpawningSystem(spriteSheet),
             new HighScoreSavingSystem(),
             new SoundSystem(helper.audioHelper),
-            new AnalyticsSystem(AnalyticsSystem.GITHUB, 'ld29_beneath_the_surface')
+            new AnalyticsSystem(AnalyticsSystem.ITCHIO, 'ld29_beneath_the_surface')
     ];
   }
 
@@ -115,7 +115,7 @@ class Game extends GameBase {
                                  new Spatial('arrow_from_left'),
                                  new BodyRect(spriteSheet.sprites['arrow_from_left'].dst),
                                  new Controller(x * 50, 'arrow'),
-                                 new TrapMover([new Vector2(450.0, 0.0), new Vector2(-450.0, 0.0)], [Linear.INOUT, Linear.INOUT], [1.0, 0.0], 0.0)]);
+                                 new TrapMover([new Vector2(500.0, 0.0), new Vector2(-500.0, 0.0)], [Linear.INOUT, Linear.INOUT], [1.0, 0.0], 1200.0)]);
               gm.add(e, GROUP_TRAPS);
               tileMap[y][x] = false;
               break;
